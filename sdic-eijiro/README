@@ -1,0 +1,5 @@
+英辞郎の場所を_EIJIDIRに設定してください。
+デフォルトでは、CDROMを/mediaにマウントした場所に設定してあります。
+例(eiji*.txt, waeiji*.txtが$HOME/Documents/eijiroにある場合):
+export _EIJIDIR=$HOME/Documents/eijiro
+makepkg
