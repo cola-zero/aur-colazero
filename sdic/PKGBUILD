@@ -1,0 +1,42 @@
+# Maintainer: Masahiro Koga <colazero0@gmail.com>
+pkgname=sdic
+pkgver=2.1.3
+pkgrel=1
+epoch=
+pkgdesc=""
+arch=('any')
+url="http://www.namazu.org/~tsuchiya/sdic/index.html"
+license=('GPL2')
+groups=()
+depends=('emacs')
+makedepends=('emacs')
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('http://www.namazu.org/~tsuchiya/sdic/sdic-2.1.3.tar.gz')
+noextract=()
+md5sums=('ba239256366fcb3a61ac067f57cc8c51')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  sed -i "s/\@infodir\@/\@infodir\@\/sdic.info/" Makefile.am
+  aclocal
+  automake --add-missing
+  ./configure --prefix=/usr
+  make
+  make info
+  nkf --overwrite -w8 "$srcdir/$pkgname-$pkgver/texi/sdic.info"
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  mkdir -p "$pkgdir/usr/share/info"
+  make prefix="$pkgdir/usr" install-info
+  make DESTDIR="$pkgdir/" install
+}
